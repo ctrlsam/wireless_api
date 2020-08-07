@@ -36,7 +36,6 @@ class Database:
         except Exception as e:
             print(e)
 
-
     def get_client_id(self, mac):
         self.c.execute("select id from clients where mac=?", (mac,))
         return int(self.c.fetchone()[0])
