@@ -56,9 +56,11 @@ class Database:
         self.conn.commit()
 
     def get_activities(self, start_timestamp, end_timestamp):
+        print(start_timestamp)
+        print(end_timestamp)
         self.c.execute('''
         SELECT * FROM activities WHERE time BETWEEN
-        datetime(?, 'unixepoch') AND datetime(?,'unixepoch')
+        datetime(?, 'unixepoch', 'localtime') AND datetime(?,'unixepoch', 'localtime')
         ''', (start_timestamp, end_timestamp))
         json_responce = []
         for row in self.c.fetchall():

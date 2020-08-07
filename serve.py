@@ -15,8 +15,8 @@ def activities():
         start_time = 0
     end_time = request.args.get("end_time")
     if end_time == None:
-        end_time = datetime.now().timestamp()
-        
+        end_time = int(datetime.now().timestamp())
+
     activities = db.get_activities(start_time, end_time)
     return jsonify(activities)
 
