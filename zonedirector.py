@@ -28,7 +28,6 @@ class ZoneDirector:
             'ok': ''
         }
         r = self.session.post(f"https://{self.address}/admin10/login.jsp", data=post_data, verify=False)
-        print(r.text)
         return "<title>Dashboard" in r.text
 
 
