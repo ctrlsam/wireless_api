@@ -20,7 +20,7 @@ class Change:
 class EventMonitor:
     def __init__(self):
         self.last_clients = None
-        self.zd = ZoneDirector(config.username, config.password)
+        self.zd = ZoneDirector(config.server_address, config.username, config.password)
         self.db = Database()
 
         while True:

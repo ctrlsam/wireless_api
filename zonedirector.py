@@ -4,9 +4,10 @@ from datetime import datetime
 
 class ZoneDirector:
 
-    def __init__(self, username, password):
+    def __init__(self, address, username, password):
         # session to keep login cookies
         self.session = requests.session()
+        self.address = address
 
         # hide SSL warnings
         urllib3.disable_warnings(
@@ -26,7 +27,8 @@ class ZoneDirector:
             'password': password, 
             'ok': ''
         }
-        r = self.session.post("https://zonedirector/admin10/login.jsp", data=post_data, verify=False)
+        r = self.session.post(f"https://{self.address}/admin10/login.jsp", data=post_data, verify=False)
+        print(r.text)
         return "<title>Dashboard" in r.text
 
 
@@ -36,7 +38,7 @@ class ZoneDirector:
             'Content-Type': 'application/x-www-form-urlencoded charset=UTF-8'
         }
         data = '''<ajax-request action='getstat' updater='stamgr.1595202440778.7319' comp='stamgr'><client LEVEL='1'/><pieceStat start='0' number='100000' pid='1' requestId='stamgr.1595202440778.7319'/></ajax-request>'''
-        r = self.session.post("https://zonedirector/admin10/_cmdstat.jsp", data=data, verify=False, headers=headers)
+        r = self.session.post(f"https://{self.address}/admin10/_cmdstat.jsp", data=data, verify=False, headers=headers)
         return self.xml_to_json(r.text, 'client', ['mac', 'user', 'ap-name', 'signal-strength', 'rssi'])
 
 
