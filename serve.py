@@ -18,7 +18,9 @@ def activities():
         end_time = int(datetime.now().timestamp())
 
     activities = db.get_activities(start_time, end_time)
-    return jsonify(activities)
+    responce = jsonify(activities)
+    responce.headers.add('Access-Control-Allow-Origin', '*')
+    return responce
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0')
