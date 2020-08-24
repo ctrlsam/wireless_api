@@ -58,7 +58,7 @@ class Database:
     def get_activities(self, start_timestamp, end_timestamp):
         self.c.execute('''
         SELECT * FROM activities WHERE time BETWEEN
-        datetime(?, 'unixepoch', 'localtime') AND datetime(?,'unixepoch', 'localtime')
+        datetime(?, 'unixepoch') AND datetime(?,'unixepoch')
         ''', (start_timestamp, end_timestamp))
         json_responce = []
         for row in self.c.fetchall():

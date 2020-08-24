@@ -1,9 +1,8 @@
 import enum
-from time import sleep
+import time
 import config
 from zonedirector import ZoneDirector
 from database import Database
-from datetime import datetime
 
 class Action(enum.Enum):
    CONNECT = 1
@@ -25,7 +24,7 @@ class EventMonitor:
 
         while True:
             self.update()
-            sleep(2)
+            time.sleep(2)
 
     def get_changes(self, old_clients, new_clients):
         changes = []
@@ -93,7 +92,7 @@ class EventMonitor:
         changes = self.get_changes(self.last_clients, new_clients)
         for change in changes:
             client_id = self.db.get_client_id(change.user_mac)
-            self.db.add_activity(client_id, datetime.now(), str(change.action), change.ap_source, change.ap_new)
+            self.db.add_activity(client_id, int(time.time()), str(change.action), change.ap_source, change.ap_new)
             print(f"[{change.user_mac}] has {change.action} to the network")
 
 
