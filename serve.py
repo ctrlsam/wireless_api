@@ -2,7 +2,7 @@ from flask import Flask
 from flask import jsonify
 from flask import request
 from database import Database
-from datetime import datetime
+import time
 
 app = Flask(__name__)
 
@@ -15,7 +15,7 @@ def activities():
         start_time = 0
     end_time = request.args.get("end_time")
     if end_time == None:
-        end_time = int(datetime.now().timestamp())
+        end_time = time.time()
 
     activities = db.get_activities(start_time, end_time)
     responce = jsonify(activities)
